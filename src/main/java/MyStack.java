@@ -1,48 +1,91 @@
 
 public class MyStack<T>
 {
+	public Node head;
+
+	public class Node{
+		public T val;
+		public Node next;
+		public Node(T val) {
+			this.val = val;
+			this.next = null;
+		}
+	
+		public void push(Node newNode) {
+			if (next == null) {
+				next = newNode;
+			}
+			else {
+				next.push(newNode);
+			}
+		}
+		public T top() {
+			if (next == null) {
+				return val;
+			}
+			else {
+				return next.top();
+			}
+		}
+		public T pop() 
+		{
+			if (next == null) {
+			T temp = val;
+			head = null;
+			return temp;
+			}
+		if (next.next == null) {
+			T temp = next.val;
+			next = null;
+			return temp;
+		}
+		return next.pop();
+		}
+	}
 
 	public MyStack()
 	{
+		head = null;
 
 	}
 
-	/**
-	 * Pushes an element to the stack
-	 * @param val
-	 */
+
 	public void push(T val)
 	{
+		Node newNode = new Node(val);
+		if (head == null) {
+			head = newNode;
+
+		}
+		else
+		{
+			head.push(newNode);
+		}
+		
 
 	}
-
-	/**
-	 * Throws stack underflow exception if empty
-	 * @return the top element on the stack
-	 */
 	public T top()
 	{
-
-		return null;
+		if (head == null) {
+			throw new StackUnderFlowException();
+		}
+		return head.top();
+		
 	}
 
-	/**
-	 * Pops the top element of the stack and returns it.
-	 * Throws stack underflow exception if empty
-	 * @return the popped element from the stack
-	 */
+
 	public T pop()
 	{
-		return null;
+		if (head == null) {
+			throw new StackUnderFlowException();
+		}
+		return head.pop();
 	}
 
-	/**
-	 * 
-	 * @return true if the stack is empty
-	 */
+
 	public boolean isEmpty()
 	{
-		return true;
+		return head == null;
 	}
 
 }
